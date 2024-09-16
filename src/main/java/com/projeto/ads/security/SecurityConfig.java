@@ -29,6 +29,7 @@ public class SecurityConfig {
             .authorizeRequests(authorize ->
                 authorize
                     .antMatchers("/css/**", "/js/**").permitAll()
+                    .antMatchers("/usuario/inserir").permitAll()
                     .anyRequest().authenticated()
             )
             .formLogin(form ->
