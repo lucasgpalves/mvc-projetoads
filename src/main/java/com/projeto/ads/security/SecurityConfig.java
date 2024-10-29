@@ -30,6 +30,8 @@ public class SecurityConfig {
                 authorize
                     .antMatchers("/css/**", "/js/**").permitAll()
                     .antMatchers("/usuario/inserir").permitAll()
+                    .antMatchers("/usuario/recuperar").permitAll()
+                    .antMatchers("/usuario/atualizarUsuario").permitAll()
                     .anyRequest().authenticated()
             )
             .formLogin(form ->
