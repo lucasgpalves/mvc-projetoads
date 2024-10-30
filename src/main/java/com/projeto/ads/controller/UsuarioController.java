@@ -151,7 +151,7 @@ public class UsuarioController {
         userRepository.save(aux);
 
         String mensagem = "Use esse token para recuperar sua senha: " + aux.getToken();
-        //serviceEmail.sendEmail("senaclpoo@gmail.com", aux.getEmail(), mensagem, "Recuperar Senha");
+        serviceEmail.sendEmail("senaclpoo@gmail.com", aux.getEmail(), mensagem, "Recuperar Senha");
 
         usuario.setToken("");
         mv.addObject("usuario", aux);
@@ -168,18 +168,28 @@ public class UsuarioController {
         return mv;
     }
 
-    // @PostMapping("/usuario/atualizarUsuario")
-    // public ModelAndView atualizarUsuario(
-    //     @ModelAttribute Usuario usuario, 
-    //     @RequestParam("confirmPassword") String confirmPassword,
-    //     @RequestParam("email") String email
-    // ) {
-    //     ModelAndView mv = new ModelAndView();
+    @PostMapping("/usuario/atualizarUsuario")
+    public ModelAndView atualizarUsuario(
+        @ModelAttribute Usuario usuario, 
+        @RequestParam("confirmPassword") String confirmPassword
+    ) throws Exception{
 
+        ModelAndView mv = new ModelAndView();
+        Usuario aux = userRepository.findByEmail(usuario.getEmail());
 
-
-    //     return mv;
-    // }
+        if (aux == null || !usuario.getToken().equals(aux.getToken())) {
+            mv.addObject("msg", "Token nao encontrado");
+            mv.addObject("usuario", usuario);
+            mv.setViewName("Login/atualizar");
+        } else {
+            aux.setToken("");// garantir que o token não seja mais usado
+            aux.setPassword(passwordEncoder.encode(usuario.getPassword()));
+            userRepository.save(aux);
+            mv.addObject("usuario", new Usuario());
+            mv.setViewName("Login/login");
+        }
+        return mv;
+    }
 }
 
 
