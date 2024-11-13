@@ -19,7 +19,7 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" id="navbardrop" data-toggle="dropdown"><i class="fa fa-user"></i>Aluno</a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" th:href="@{/aluno/editar}"> <i class="fa fa-pencil-square"></i>Editar</a>
+                            <a class="dropdown-item" th:href="@{/aluno/alterar}"> <i class="fa fa-pencil-square"></i>Editar</a>
                             <a class="dropdown-item" th:href="@{/aluno/deletar}"> <i class="fa fa-trash"></i>Excluir</a>
                             <a class="dropdown-item" th:href="@{/aluno/inserir}"> <i class="fa fa-graduation-cap"></i>Inserir</a>
                             <a class="dropdown-item" th:href="@{/aluno/listar}"> <i class="fa fa-search"></i>Listar</a>
@@ -43,10 +43,10 @@
             <h1 class="text-center">Sistema de Gerenciamento de Alunos</h1>
             <div class="row justify-content-center">
                 <div class="col-auto">
-                    <button class="btn btn-primary">Cadastrar Aluno</button>
+                    <a th:href="@{/aluno/inserir}" class="btn btn-primary">Cadastrar Aluno</a>
                 </div>
                 <div class="col-auto">
-                    <button class="btn btn-success">Encontrar Aluno</button>
+                    <a th:href="@{/aluno/listar}" class="btn btn-success">Encontrar Aluno</a>
                 </div>
             </div>
         </div>

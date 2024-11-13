@@ -6,7 +6,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <!------ Include the above in your HEAD tag ---------->
-    <title>Inserir Aluno</title>
+    <title>Alterar Aluno</title>
 </head>
 <body>
             <header>
@@ -40,17 +40,19 @@
     </header>
 
     <div id="login">
-        <h3 class="text-center text-white pt-5">Cadastro de Aluno</h3>
+        <h3 class="text-center text-white pt-5">Alterar Aluno</h3>
         <div class="container">
             <div id="login-row" class="row justify-content-center align-items-center">
                 <div id="login-column" class="col-md-6">
                     <div id="login-box" class="col-md-12">
                         <form id="aluno-form" class="form" method="post" th:object="${aluno}"
-                        action="/aluno/inserir">
-                        <h3 class="text-center text-info">Crie seu usuário no sistema</h3>
-                        <div th:if="${msg}" class="alert alert-danger" role="alert">
-                            <span th:text="${msg}"></span>
-                        </div>
+                        action="/aluno/alterar">
+                        <h3 class="text-center text-info">Altere seu usuário no sistema</h3>
+                            <div th:if="${msg}" class="alert alert-danger" role="alert">
+                                <span th:text="${msg}"></span>
+                            </div>
+                            <input type="hidden" th:field="*{id}">
+                            <input type="hidden" th:field="*{matricula}">
                             <div class="form-group">
                                 <div class="col-md-6 offset-md-3">
                                     <label for="nome" class="text-info">Nome:</label><br>
@@ -106,7 +108,7 @@
                             <!-- Adicione mais campos conforme necessário -->
 
                             <div id="register-link" class="text-center">
-                                <button type="submit" class="btn btn-success">Cadastrar</button>
+                                <button type="submit" class="btn btn-success">Alterar</button>
                             </div>
                         </form>
                     </div>
