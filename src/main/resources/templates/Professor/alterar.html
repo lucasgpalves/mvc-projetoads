@@ -1,0 +1,122 @@
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <!------ Include the above in your HEAD tag ---------->
+    <title>Alterar Professor</title>
+</head>
+<body>
+            <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <div class="collapse navbar-collapse" id="textoNavbar">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                    <a class="nav-link" th:href="@{/dashboard}"><i class="fa fa-home"></i>Home<span class="sr-only">(Página atual)</span></a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbardrop" data-toggle="dropdown"><i class="fa fa-user"></i>Aluno</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" th:href="@{/aluno/alterar}"> <i class="fa fa-pencil-square"></i>Editar</a>
+                            <a class="dropdown-item" th:href="@{/aluno/deletar}"> <i class="fa fa-trash"></i>Excluir</a>
+                            <a class="dropdown-item" th:href="@{/aluno/inserir}"> <i class="fa fa-graduation-cap"></i>Inserir</a>
+                            <a class="dropdown-item" th:href="@{/aluno/listar}"> <i class="fa fa-search"></i>Listar</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbardrop" data-toggle="dropdown"><i class="fa fa-user"></i>Professor</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" th:href="@{/professor/alterar}"> <i class="fa fa-pencil-square"></i>Editar</a>
+                            <a class="dropdown-item" th:href="@{/professor/deletar}"> <i class="fa fa-trash"></i>Excluir</a>
+                            <a class="dropdown-item" th:href="@{/professor/inserir}"> <i class="fa fa-graduation-cap"></i>Inserir</a>
+                            <a class="dropdown-item" th:href="@{/professor/listar}"> <i class="fa fa-search"></i>Listar</a>
+                        </div>
+                    </li>
+                </ul>
+                <span class="navbar-text">
+                    <div class="collapse navbar-collapse" id="textoNavbar">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Sair</a>
+                            </li>
+                        </ul>
+                    </div>
+                </span>
+            </div>
+        </nav>
+    </header>
+
+    <div id="login">
+        <h3 class="text-center text-white pt-5">Alterar de Professor</h3>
+        <div class="container">
+            <div id="login-row" class="row justify-content-center align-items-center">
+                <div id="login-column" class="col-md-6">
+                    <div id="login-box" class="col-md-12">
+                        <form id="professor-form" class="form" method="post" th:object="${professor}"
+                        action="/professor/alterar">
+                        <h3 class="text-center text-info">Alterar professor no sistema</h3>
+                        <div th:if="${msg}" class="alert alert-danger" role="alert">
+                            <span th:text="${msg}"></span>
+                        </div>
+                            <input type="hidden" th:field="*{id}">
+                            <div class="form-group">
+                                <div class="col-md-6 offset-md-3">
+                                    <label for="nome" class="text-info">Nome:</label><br>
+                                    <input type="text" name="nome" id="nome" th:field="*{nome}" placeholder="Nome" class="form-control" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-6 offset-md-3">
+                                    <label for="email" class="text-info">Email:</label><br>
+                                    <input type="text" name="email" id="email" th:field="*{email}" placeholder="Email" class="form-control" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-6 offset-md-3">
+                                    <label for="matricula" class="text-info">Matricula:</label><br>
+                                    <input type="text" name="matricula" id="matricula" th:field="*{matricula}" reandoly class="form-control" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-6 offset-md-3">
+                                    <label for="cpf" class="text-info">Cpf:</label><br>
+                                    <input type="text" maxlength="11" pattern="[0-9]{11}" name="cpf" id="cpf" th:field="*{cpf}" placeholder="Cpf" class="form-control" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-6 offset-md-3">
+                                    <label>Selecione a Titulação</label>
+                                    <select class="form-control" th:field="*{titulacao}"> 
+                                        <option th:each="titulacao:${T(com.projeto.ads.Enum.Titulacao).values()}" th:value="${titulacao}" th:text="${titulacao}"></option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Adicione mais campos conforme necessário -->
+
+                            <div id="register-link" class="text-center">
+                                <button type="submit" class="btn btn-success">Cadastrar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-primary text-center text-lg-start">
+        <!-- Grid container -->
+            <!-- Copyright -->
+            <div class="text-center p-3" style= "color: #fff; font-weight: bold;">
+                © 2024 Copyright: SENAC
+               
+            </div>
+    </footer>
+</body>
+</html>

@@ -40,6 +40,21 @@ public class ServiceProfessor {
         return out;
     }
 
+    public String alterarProfessor(Professor professor) {
+        Professor aux = professorRepository.findByCpf(professor.getCpf());
+        if((aux != null && aux.getId() == professor.getId()) || aux == null) {
+
+            Professor aux2 = professorRepository.findByEmail(professor.getEmail());
+            if((aux2 != null && aux2.getId() == professor.getId()) || aux2 == null) {
+                return null;
+            } else {
+                return "Esse email está sendo usado por outro professor";
+            }
+        } else {
+            return "Esse cpf está sendo usado por outro professor";
+        }
+    }
+
     public String gerarMatricula() {
         Date data = new Date();
         Calendar calendario = Calendar.getInstance();
