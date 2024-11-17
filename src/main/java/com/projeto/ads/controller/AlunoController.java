@@ -2,7 +2,6 @@ package com.projeto.ads.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,8 +11,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.projeto.ads.model.Aluno;
 import com.projeto.ads.repository.AlunoRepository;
 import com.projeto.ads.service.ServiceAluno;
-import org.springframework.web.bind.annotation.RequestParam;
-
 
 @Controller
 public class AlunoController {

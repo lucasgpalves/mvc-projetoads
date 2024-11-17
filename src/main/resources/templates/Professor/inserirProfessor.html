@@ -6,7 +6,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <!------ Include the above in your HEAD tag ---------->
-    <title>Painel de Usuário</title>
+    <title>Inserir Professor</title>
 </head>
 <body>
             <header>
@@ -14,7 +14,7 @@
             <div class="collapse navbar-collapse" id="textoNavbar">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                    <a class="nav-link" th:href="@{dashboard}"><i class="fa fa-home"></i>Home<span class="sr-only">(Página atual)</span></a>
+                    <a class="nav-link" th:href="@{/dashboard}"><i class="fa fa-home"></i>Home<span class="sr-only">(Página atual)</span></a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" id="navbardrop" data-toggle="dropdown"><i class="fa fa-user"></i>Aluno</a>
@@ -47,19 +47,61 @@
             </div>
         </nav>
     </header>
-        <section class="neo-section">
-        <div class="container mb-5">
-            <h1 class="text-center">Sistema de Gerenciamento de Alunos</h1>
-            <div class="row justify-content-center">
-                <div class="col-auto">
-                    <a th:href="@{/aluno/inserir}" class="btn btn-primary">Cadastrar Aluno</a>
-                </div>
-                <div class="col-auto">
-                    <a th:href="@{/aluno/listar}" class="btn btn-success">Encontrar Aluno</a>
+
+    <div id="login">
+        <h3 class="text-center text-white pt-5">Cadastro de Professor</h3>
+        <div class="container">
+            <div id="login-row" class="row justify-content-center align-items-center">
+                <div id="login-column" class="col-md-6">
+                    <div id="login-box" class="col-md-12">
+                        <form id="professor-form" class="form" method="post" th:object="${professor}"
+                        action="/professor/inserir">
+                        <h3 class="text-center text-info">Crie seu professor no sistema</h3>
+                        <div th:if="${msg}" class="alert alert-danger" role="alert">
+                            <span th:text="${msg}"></span>
+                        </div>
+                            <div class="form-group">
+                                <div class="col-md-6 offset-md-3">
+                                    <label for="nome" class="text-info">Nome:</label><br>
+                                    <input type="text" name="nome" id="nome" th:field="*{nome}" placeholder="Nome" class="form-control" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-6 offset-md-3">
+                                    <label for="email" class="text-info">Email:</label><br>
+                                    <input type="text" name="email" id="email" th:field="*{email}" placeholder="Email" class="form-control" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-6 offset-md-3">
+                                    <label for="cpf" class="text-info">Cpf:</label><br>
+                                    <input type="text" maxlength="11" pattern="[0-9]{11}" name="cpf" id="cpf" th:field="*{cpf}" placeholder="Cpf" class="form-control" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-6 offset-md-3">
+                                    <label>Selecione a Titulação</label>
+                                    <select class="form-control" th:field="*{titulacao}"> 
+                                        <option th:each="titulacao:${T(com.projeto.ads.Enum.Titulacao).values()}" th:value="${titulacao}" th:text="${titulacao}"></option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Adicione mais campos conforme necessário -->
+
+                            <div id="register-link" class="text-center">
+                                <button type="submit" class="btn btn-success">Cadastrar</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+
     <footer class="bg-primary text-center text-lg-start">
         <!-- Grid container -->
             <!-- Copyright -->
