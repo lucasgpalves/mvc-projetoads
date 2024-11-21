@@ -6,7 +6,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <!------ Include the above in your HEAD tag ---------->
-    <title>Painel de Usuário</title>
+    <title>Listar Turmas</title>
 </head>
 <body>
             <header>
@@ -14,7 +14,7 @@
             <div class="collapse navbar-collapse" id="textoNavbar">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                    <a class="nav-link" th:href="@{dashboard}"><i class="fa fa-home"></i>Home<span class="sr-only">(Página atual)</span></a>
+                    <a class="nav-link" th:href="@{/dashboard}"><i class="fa fa-home"></i>Home<span class="sr-only">(Página atual)</span></a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" id="navbardrop" data-toggle="dropdown"><i class="fa fa-user"></i>Aluno</a>
@@ -56,27 +56,49 @@
             </div>
         </nav>
     </header>
-        <section class="neo-section">
-        <div class="container mb-5">
-            <h1 class="text-center">Sistema de Gerenciamento de Alunos</h1>
-            <div class="row justify-content-center">
-                <div class="col-auto">
-                    <a th:href="@{/aluno/inserir}" class="btn btn-primary">Cadastrar Aluno</a>
-                </div>
-                <div class="col-auto">
-                    <a th:href="@{/aluno/listar}" class="btn btn-success">Encontrar Aluno</a>
-                </div>
-            </div>
-            <div class="row justify-content-center mt-3">
-                <div class="col-auto">
-                    <a th:href="@{/professor/inserir}" class="btn btn-primary">Cadastrar Professor</a>
-                </div>
-                <div class="col-auto">
-                    <a th:href="@{/professor/listar}" class="btn btn-success">Encontrar Professor</a>
-                </div>
-            </div>
-        </div>
-    </section>
+
+    <div id="container">
+        <h2 class="text-center">Listar Turmas</h2>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th class="text-center" scope="col">Código Turma</th>
+                    <th class="text-center" scope="col">Professor</th>
+                    <th class="text-center" scope="col">Curso</th>
+                    <th class="text-center" scope="col">Periodo</th>
+                    <th class="text-center" scope="col">Turno</th>
+                    <th class="text-center" scope="col">Alunos</th>
+                    <th class="text-center" scope="col">Alterar</th>
+                    <th class="text-center" scope="col">Excluir</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr scope="row" th:each="turma : ${turmas}">
+                    <td class="text-center" th:text="${turma.codTurma}"></td>
+                    <td class="text-center" th:text="${turma.professor.nome}"></td>
+                    <td class="text-center" th:text="${turma.curso}"></td>
+                    <td class="text-center" th:text="${turma.periodo}"></td>
+                    <td class="text-center" th:switch="${turma.turno}">
+                        <span th:case="'M'">Matutino</span>
+                        <span th:case="'N'">Noturno</span>
+                    </td>
+                    <td class="text-center">
+                        <a class="btn btn-success" th:href="@{turma/listarAlunos/{id}(id=${turma.id})}">
+                            <i class="fa fa-graduation-cap"></i>
+                        </a>
+                    </td>
+                    <td class="text-center">
+                        <a class="btn btn-secondary" th:href="@{/turma/alterar/{id}(id=${turma.id})}">
+                            <i class="fa fa-pencil-square"></i>
+                        </a>
+                    </td>
+                    <td class="text-center">
+                        <a class="btn btn-danger" th:href="@{/turma/excluir/{id}(id=${turma.id})}"><i class="fa fa-trash"></i></a>
+                    </td>
+            </tbody>
+        </table>
+    </div>
+
     <footer class="bg-primary text-center text-lg-start">
         <!-- Grid container -->
             <!-- Copyright -->

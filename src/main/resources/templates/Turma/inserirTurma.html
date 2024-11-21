@@ -6,7 +6,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <!------ Include the above in your HEAD tag ---------->
-    <title>Painel de Usuário</title>
+    <title>Alterar Aluno</title>
 </head>
 <body>
             <header>
@@ -14,7 +14,7 @@
             <div class="collapse navbar-collapse" id="textoNavbar">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                    <a class="nav-link" th:href="@{dashboard}"><i class="fa fa-home"></i>Home<span class="sr-only">(Página atual)</span></a>
+                    <a class="nav-link" th:href="@{/dashboard}"><i class="fa fa-home"></i>Home<span class="sr-only">(Página atual)</span></a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" id="navbardrop" data-toggle="dropdown"><i class="fa fa-user"></i>Aluno</a>
@@ -56,27 +56,69 @@
             </div>
         </nav>
     </header>
-        <section class="neo-section">
-        <div class="container mb-5">
-            <h1 class="text-center">Sistema de Gerenciamento de Alunos</h1>
-            <div class="row justify-content-center">
-                <div class="col-auto">
-                    <a th:href="@{/aluno/inserir}" class="btn btn-primary">Cadastrar Aluno</a>
-                </div>
-                <div class="col-auto">
-                    <a th:href="@{/aluno/listar}" class="btn btn-success">Encontrar Aluno</a>
-                </div>
-            </div>
-            <div class="row justify-content-center mt-3">
-                <div class="col-auto">
-                    <a th:href="@{/professor/inserir}" class="btn btn-primary">Cadastrar Professor</a>
-                </div>
-                <div class="col-auto">
-                    <a th:href="@{/professor/listar}" class="btn btn-success">Encontrar Professor</a>
+
+    <div id="login">
+        <h3 class="text-center text-white pt-5">Inserir Turma</h3>
+        <div class="container">
+            <div id="login-row" class="row justify-content-center align-items-center">
+                <div id="login-column" class="col-md-6">
+                    <div id="login-box" class="col-md-12">
+                        <form id="aluno-form" class="form" method="post" th:object="${turma}"
+                        action="/turma/inserir">
+                        <h3 class="text-center text-info">Crie uma nova turma no sistema</h3>
+                            <div th:if="${msg}" class="alert alert-danger" role="alert">
+                                <span th:text="${msg}"></span>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-6 offset-md-3">
+                                    <label for="nomeprof" class="text-info">Professor:</label><br>
+                                    <select class="form-control" th:field="*{professor}" required>
+                                        <option th:each="professor:${professores}" th:value="${professor.id}" th:text="${professor.nome}"> </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-6 offset-md-3">
+                                    <label>Selecione um Curso</label>
+                                    <select class="form-control" th:field="*{curso}"> 
+                                        <option th:each="curso:${T(com.projeto.ads.Enum.Curso).values()}" th:value="${curso}" th:text="${curso}"></option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-6 offset-md-3">
+                                    <label>Selecione o Periodo</label>
+                                    <select class="form-control" th:field="*{periodo}"> 
+                                        <option th:each="periodo:${T(com.projeto.ads.Enum.Periodo).values()}" th:value="${periodo}" th:text="${periodo}"></option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-6 offset-md-3">
+                                    <label>Selecione um Turno</label>
+                                    <select class="form-control" th:field="*{turno}"> 
+                                        <option th:value="M" th:text="Matutino"></option>
+                                        <option th:value="V" th:text="Vespertino"></option>
+                                        <option th:value="N" th:text="Matutino"></option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Adicione mais campos conforme necessário -->
+
+                            <div id="register-link" class="text-center">
+                                <button type="submit" class="btn btn-success">Inserir</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+
     <footer class="bg-primary text-center text-lg-start">
         <!-- Grid container -->
             <!-- Copyright -->

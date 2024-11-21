@@ -25,6 +25,24 @@
                             <a class="dropdown-item" th:href="@{/aluno/listar}"> <i class="fa fa-search"></i>Listar</a>
                         </div>
                     </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbardrop" data-toggle="dropdown"><i class="fa fa-user"></i>Professor</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" th:href="@{/professor/alterar}"> <i class="fa fa-pencil-square"></i>Editar</a>
+                            <a class="dropdown-item" th:href="@{/professor/deletar}"> <i class="fa fa-trash"></i>Excluir</a>
+                            <a class="dropdown-item" th:href="@{/professor/inserir}"> <i class="fa fa-graduation-cap"></i>Inserir</a>
+                            <a class="dropdown-item" th:href="@{/professor/listar}"> <i class="fa fa-search"></i>Listar</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbardrop" data-toggle="dropdown"><i class="fa fa-user"></i>Turma</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" th:href="@{/turma/alterar}"> <i class="fa fa-pencil-square"></i>Editar</a>
+                            <a class="dropdown-item" th:href="@{/turma/deletar}"> <i class="fa fa-trash"></i>Excluir</a>
+                            <a class="dropdown-item" th:href="@{/turma/inserir}"> <i class="fa fa-graduation-cap"></i>Inserir</a>
+                            <a class="dropdown-item" th:href="@{/turma/listar}"> <i class="fa fa-search"></i>Listar</a>
+                        </div>
+                    </li>
                 </ul>
                 <span class="navbar-text">
                     <div class="collapse navbar-collapse" id="textoNavbar">
