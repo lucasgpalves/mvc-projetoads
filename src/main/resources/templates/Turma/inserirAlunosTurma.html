@@ -9,7 +9,7 @@
     <title>Alterar Aluno</title>
 </head>
 <body>
-            <header>
+    <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
             <div class="collapse navbar-collapse" id="textoNavbar">
                 <ul class="navbar-nav mr-auto">
@@ -89,7 +89,7 @@
                             <div class="modal fade" id="alunosModal" tabindex="-1" role="dialog" aria-labelledby="alunosModalLabel" aria-hidden="true">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="alunosModalLabel">Selecione os Alunos<h5>
+                                        <h5 class="modal-title" id="alunosModalLabel">Selecione os Alunos</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
@@ -101,7 +101,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Fechar">Fechar</button>
-                                        <button type="button" class="btn btn-primary" onclick="confirmarAlunos()" aria-label="Fechar">Confirmar</button>
+                                        <button type="button" class="btn btn-primary" onclick="confirmarAlunos()">Confirmar</button>
                                     </div>
                                 </div>
                             
@@ -120,11 +120,11 @@
                 if (turmaSelect) {
                     const turmaId = turmaSelect.value;
                     if (turmaId) {
-                        fetch('/turma/buscarAlunos/${turmaId}')
+                        fetch(`/turma/buscarAlunos/${turmaId}`)
                         .then(response => {
                             console.log("Resposta do servidor", response);
                             if (!response.ok) {
-                                throw new Error("Erro na resposta do servidor: ${response.status}")
+                                throw new Error(`Erro na resposta do servidor: ${response.status}`);
                             }
                             return response.json();
                         })
@@ -134,13 +134,13 @@
                                 console.error('Elemento alunos-modal-content não encontrado!');
                                 return;
                             }
-                            alunocontent.innerHTML='';
-                            if(data.lenght > 0) {
+                            alunoscontent.innerHTML='';
+                            if(data.length > 0) {
                                 data.forEach(aluno => {
-                                    alunoscontent.innerHTML+='<div><input type="checkbox" id="aluno-${aluno.id}" value="${aluno.id}"><label for="aluno-${aluno.id}">${aluno.nome}</label></div>';
+                                    alunoscontent.innerHTML+=`<div><input type="checkbox" id="aluno-${aluno.id}" value="${aluno.id}"><label for="aluno-${aluno.id}">${aluno.nome}</label></div>`;
                                 });
                             } else {
-                                alunocontent.innerHTML='<p>Nenhum aluno encontrado</p>';
+                                alunoscontent.innerHTML='<p>Nenhum aluno encontrado</p>';
                             }
                             $('#alunosModal').modal('show');
                         })

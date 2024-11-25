@@ -71,10 +71,17 @@ public class TurmaController {
         return mv;
     }
 
+    @GetMapping("/turma/buscarAlunos/{id}")
     @ResponseBody
     public List<Aluno> buscarAlunos(@PathVariable("id") Long turmaId) {
-        return turmaRepository.findById(turmaId)
-                .map(turma -> alunoRepository.buscarPorCursoETurno(turma.getCurso(), turma.getTurno())).orElse(List.of());
+        System.out.println("METODO BUSCARALUNOS");
+        List<Aluno> alunos = turmaRepository.findById(turmaId)
+                .map(turma -> alunoRepository.buscarPorCursoETurno(turma.getCurso(), turma.getTurno()))
+                .orElse(List.of());
+    
+        System.out.println(alunos);
+        return alunos;
     }
+    
 
 }
