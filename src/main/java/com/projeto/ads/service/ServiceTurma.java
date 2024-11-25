@@ -46,7 +46,7 @@ public class ServiceTurma {
     public void salvarTurmasComAlunos(Turma turma, List<Long> alunosSelecionados) {
         Turma turmaSalva = turmaRepository.save(turma);
         turmaAlunoRepository.deleteByTurma(turmaSalva);
-        List<Aluno> alunos = alunoRepository.findAllById(alunosSelecionados);
+        List<Aluno> alunos = (List<Aluno>) alunoRepository.findAllById(alunosSelecionados);
         List<TurmaAluno> turmasAlunos = alunos.stream()
         .map(aluno -> {
             TurmaAluno turmaAluno = new TurmaAluno();
