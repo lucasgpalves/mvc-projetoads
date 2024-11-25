@@ -1,13 +1,19 @@
 package com.projeto.ads.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.projeto.ads.model.Aluno;
 import com.projeto.ads.model.Turma;
+import com.projeto.ads.repository.AlunoRepository;
 import com.projeto.ads.repository.ProfessorRepository;
 import com.projeto.ads.repository.TurmaRepository;
 import com.projeto.ads.service.ServiceTurma;
@@ -23,6 +29,9 @@ public class TurmaController {
 
     @Autowired
     ServiceTurma serviceTurma;
+
+    @Autowired
+    AlunoRepository alunoRepository;
 
     @GetMapping("/turma/inserir")
     public ModelAndView inserirTurmaGet() {
@@ -52,5 +61,20 @@ public class TurmaController {
         return mv;
     }
 
+    @GetMapping("/turma/inserirAlunosTurma")
+    public ModelAndView carregarFormulario() {
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("turmas", turmaRepository.findAllByOrderByCodTurmaAsc());
+        mv.addObject("alunos", List.of());
+        mv.addObject("turma", new Turma());
+        mv.setViewName("Turma/inserirAlunosTurma");
+        return mv;
+    }
+
+    @ResponseBody
+    public List<Aluno> buscarAlunos(@PathVariable("id") Long turmaId) {
+        return turmaRepository.findById(turmaId)
+                .map(turma -> alunoRepository.buscarPorCursoETurno(turma.getCurso(), turma.getTurno())).orElse(List.of());
+    }
 
 }

@@ -21,4 +21,5 @@ public interface TurmaRepository extends JpaRepository<Turma, Long>{
 
     @Query("SELECT t FROM Turma t WHERE t.id= (SELECT MAX(t2.id) FROM Turma t2)")
     public Turma findLastInsertedTurma();
+
 }

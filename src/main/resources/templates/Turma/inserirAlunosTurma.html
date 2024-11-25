@@ -6,7 +6,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <!------ Include the above in your HEAD tag ---------->
-    <title>Inserir Aluno</title>
+    <title>Alterar Aluno</title>
 </head>
 <body>
             <header>
@@ -59,73 +59,52 @@
     </header>
 
     <div id="login">
-        <h3 class="text-center text-white pt-5">Cadastro de Aluno</h3>
+        <h3 class="text-center text-white pt-5">Inserir Alunos numa Turma</h3>
         <div class="container">
             <div id="login-row" class="row justify-content-center align-items-center">
                 <div id="login-column" class="col-md-6">
                     <div id="login-box" class="col-md-12">
-                        <form id="aluno-form" class="form" method="post" th:object="${aluno}"
-                        action="/aluno/inserir">
-                        <h3 class="text-center text-info">Crie seu usuário no sistema</h3>
-                        <div th:if="${msg}" class="alert alert-danger" role="alert">
-                            <span th:text="${msg}"></span>
-                        </div>
-                            <div class="form-group">
-                                <div class="col-md-6 offset-md-3">
-                                    <label for="nome" class="text-info">Nome:</label><br>
-                                    <input type="text" name="nome" id="nome" th:field="*{nome}" placeholder="Nome" class="form-control" required>
-                                </div>
+                        <form id="turmaaluno-form" class="form" method="post" th:object="${turma}"
+                        action="/turma/inserirAlunosTurma" name="inserirAlunosTurma">
+                        <h3 class="text-center text-info">Inserir alunos numa turma</h3>
+                            <div th:if="${msg}" class="alert alert-danger" role="alert">
+                                <span th:text="${msg}"></span>
                             </div>
-
                             <div class="form-group">
                                 <div class="col-md-6 offset-md-3">
-                                    <label for="cpf" class="text-info">Cpf:</label><br>
-                                    <input type="text" maxlength="11" pattern="[0-9]{11}" name="cpf" id="cpf" th:field="*{cpf}" placeholder="Cpf" class="form-control" required>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-md-6 offset-md-3">
-                                    <label>Selecione um Curso</label>
-                                    <select class="form-control" th:field="*{curso}"> 
-                                        <option th:each="curso:${T(com.projeto.ads.Enum.Curso).values()}" th:value="${curso}" th:text="${curso}"></option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-md-6 offset-md-3">
-                                    <label>Selecione o Status</label>
-                                    <select class="form-control" th:field="*{status}"> 
-                                        <option th:each="status:${T(com.projeto.ads.Enum.Status).values()}" th:value="${status}" th:text="${status}"></option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-md-6 offset-md-3">
-                                    <label>Selecione o Periodo</label>
-                                    <select class="form-control" th:field="*{periodo}"> 
-                                        <option th:each="periodo:${T(com.projeto.ads.Enum.Periodo).values()}" th:value="${periodo}" th:text="${periodo}"></option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-md-6 offset-md-3">
-                                    <label>Selecione um Turno</label>
-                                    <select class="form-control" th:field="*{turno}"> 
-                                        <option th:value="M" th:text="Matutino"></option>
-                                        <option th:value="V" th:text="Vespertino"></option>
-                                        <option th:value="N" th:text="Matutino"></option>
+                                    <label for="nomeprof" class="text-info">Selecione a turma</label><br>
+                                    <select class="form-control" id="turma-select" onchange="atualizarAlunos()" th:field="*{id}" required>
+                                        <option value="0">Escolha uma turma</option>
+                                        <option th:each="turma:${turmas}" th:value=${turma.id} th:text="${turma.codTurma}"></option>
                                     </select>
                                 </div>
                             </div>
 
                             <!-- Adicione mais campos conforme necessário -->
 
-                            <div id="register-link" class="text-center">
-                                <button type="submit" class="btn btn-success">Cadastrar</button>
+                            <div id="register-link" class="form-group text-center">
+                                <button type="submit" class="btn btn-success">Salvar</button>
+                            </div>
+
+                            <div class="modal fade" id="alunosModal" tabindex="-1" role="dialog" aria-labelledby="alunosModalLabel" aria-hidden="true">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="alunosModalLabel">Selecione os Alunos<h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div id="alunos-modal-content">
+                                            <!-- checkboxes dos alunos ser'ao renderizados dinamicamente-->
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Fechar">Fechar</button>
+                                        <button type="button" class="btn btn-primary" onclick="confirmarAlunos()" aria-label="Fechar">Confirmar</button>
+                                    </div>
+                                </div>
+                            
                             </div>
                         </form>
                     </div>
@@ -135,6 +114,45 @@
     </div>
 
     <footer class="bg-primary text-center text-lg-start">
+        <script>
+            function atualizarAlunos() {
+                const turmaSelect = document.getElementById("turma-select");
+                if (turmaSelect) {
+                    const turmaId = turmaSelect.value;
+                    if (turmaId) {
+                        fetch('/turma/buscarAlunos/${turmaId}')
+                        .then(response => {
+                            console.log("Resposta do servidor", response);
+                            if (!response.ok) {
+                                throw new Error("Erro na resposta do servidor: ${response.status}")
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            const alunoscontent = document.getElementById("alunos-modal-content");
+                            if (!alunoscontent) {
+                                console.error('Elemento alunos-modal-content não encontrado!');
+                                return;
+                            }
+                            alunocontent.innerHTML='';
+                            if(data.lenght > 0) {
+                                data.forEach(aluno => {
+                                    alunoscontent.innerHTML+='<div><input type="checkbox" id="aluno-${aluno.id}" value="${aluno.id}"><label for="aluno-${aluno.id}">${aluno.nome}</label></div>';
+                                });
+                            } else {
+                                alunocontent.innerHTML='<p>Nenhum aluno encontrado</p>';
+                            }
+                            $('#alunosModal').modal('show');
+                        })
+                        .catch(error => {alert('Erro ao buscar alunos!')});
+                    } else {
+                        alert('Selecione uma turma válida');
+                    }
+                } else {
+                    console.error('Elemento com id turma-select não encontrado!');
+                }
+            }
+        </script>
         <!-- Grid container -->
             <!-- Copyright -->
             <div class="text-center p-3" style= "color: #fff; font-weight: bold;">
@@ -142,5 +160,8 @@
                
             </div>
     </footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 </body>
 </html>
