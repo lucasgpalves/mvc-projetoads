@@ -21,6 +21,8 @@ public interface AlunoRepository extends CrudRepository<Aluno, Long>{
 
     public List<Aluno> findAllByOrderByNomeAsc();
 
+    public List<Aluno> findAllById(List<Long> alunos);
+
     @Query("SELECT a FROM Aluno a WHERE a.curso=:curso AND a.turno=:turno")
     public List<Aluno> buscarPorCursoETurno(@Param("curso") Curso curso, @Param("turno") String turno);
 

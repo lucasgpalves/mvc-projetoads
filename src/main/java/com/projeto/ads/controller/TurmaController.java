@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -83,5 +84,13 @@ public class TurmaController {
         return alunos;
     }
     
+    @PostMapping("/turma/inserirAlunosTurma")
+    public ModelAndView inserirAlunosNaTurma(@ModelAttribute Turma turma, @RequestParam List<Long> alunosSelecionados) {
+        ModelAndView mv = new ModelAndView();
+        Turma auxTurma = turmaRepository.findById(turma.getId()).get();
+        serviceTurma.salvarTurmasComAlunos(auxTurma, alunosSelecionados);
+        mv.setViewName("redirect:/turma/listar");
+        return mv;
+    }
 
 }
