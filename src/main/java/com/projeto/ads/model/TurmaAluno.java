@@ -3,15 +3,20 @@ package com.projeto.ads.model;
 import java.util.Objects;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "turma_aluno")
+@SequenceGenerator(name = "seq_turma_aluno", sequenceName = "seq_turma_aluno", allocationSize = 1, initialValue = 1)
 public class TurmaAluno {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "seq_turma_aluno")
     private Long id;
 
     @ManyToOne

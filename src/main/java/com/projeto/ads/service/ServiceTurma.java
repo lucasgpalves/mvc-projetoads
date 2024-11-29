@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,6 +45,7 @@ public class ServiceTurma {
         }
     }
 
+    @Transactional
     public void salvarTurmasComAlunos(Turma turma, List<Long> alunosSelecionados) {
         Turma turmaSalva = turmaRepository.save(turma);
         turmaAlunoRepository.deleteByTurma(turmaSalva);

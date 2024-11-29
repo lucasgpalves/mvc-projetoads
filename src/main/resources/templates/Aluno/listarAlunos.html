@@ -68,6 +68,7 @@
                     <th class="text-center" scope="col">Matricula</th>
                     <th class="text-center" scope="col">CPF</th>
                     <th class="text-center" scope="col">Status</th>
+                    <th class="text-center" scope="col">Periodo</th>
                     <th class="text-center" scope="col">Turno</th>
                     <th class="text-center" scope="col">Alterar</th>
                     <th class="text-center" scope="col">Excluir</th>
@@ -80,6 +81,7 @@
                     <td class="text-center" th:text="${aluno.matricula}"></td>
                     <td class="text-center" th:text="${aluno.cpf}"></td>
                     <td class="text-center" th:text="${aluno.status}"></td>
+                    <td class="text-center" th:text="${aluno.periodo}"></td>
                     <td class="text-center" th:text="${aluno.turno}"></td>
                     <td class="text-center">
                         <a class="btn btn-secondary" th:href="@{/aluno/alterar/{id}(id=${aluno.id})}">

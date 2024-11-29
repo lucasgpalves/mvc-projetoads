@@ -52,7 +52,7 @@ public class AlunoController {
     @GetMapping("/aluno/listar")
     public ModelAndView insertAlunoGET() {
         ModelAndView mv = new ModelAndView();
-        mv.addObject("alunos", alunoRepository.findAll());
+        mv.addObject("alunos", alunoRepository.findAllOrderedById());
         mv.setViewName("Aluno/listarAlunos");
         return mv;
     }
